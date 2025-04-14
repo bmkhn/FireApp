@@ -15,6 +15,7 @@ class HomePageView(ListView):
     context_object_name = 'home'
     template_name = "home.html"
 
+
 class ChartView(ListView):
     template_name = "chart.html"
 
@@ -133,5 +134,40 @@ def MultilineIncidentTop3Country(request):
 
     for country in result:
         result[country] = dict(sorted(result[country].items()))
+
+    return JsonResponse(result)
+
+
+def multipleBarbySeverity(request):
+    query = '''
+    SELECT
+        fi.severity_level,
+        strftime('%m', fi.date_time) AS month,
+        COUNT(fi.id) AS incident_count
+    FROM
+        fire_incident fi
+    GROUP BY fi.severity_level, month
+    '''
+
+    with connection.cursor() as cursor:
+        cursor.execute(query)
+        rows = cursor.fetchall()
+
+    result = {}
+    months = {str(i).zfill(2) for i in range(1, 13)}
+
+    for row in rows:
+        level = str(row[0]) # Ensure the severity level is a string
+        month = row[1]
+        total_incidents = row[2]
+
+        if level not in result:
+            result[level] = {month: 0 for month in months}
+
+        result[level][month] = total_incidents
+
+        # Sort months within each severity level
+        for level in result:
+            result[level] = dict(sorted(result[level].items()))
 
     return JsonResponse(result)
