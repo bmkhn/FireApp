@@ -121,7 +121,7 @@
 <script>
     var lineChart = document.getElementById("lineChart").getContext("2d"),
         barChart = document.getElementById("barChart").getContext("2d"),
-        pieChart = document.getElementById("pieChart").getContext("2d"),
+        // pieChart = document.getElementById("pieChart").getContext("2d"),
         doughnutChart = document.getElementById("doughnutChart").getContext("2d"),
         radarChart = document.getElementById("radarChart").getContext("2d"),
         bubbleChart = document.getElementById("bubbleChart").getContext("2d"),
@@ -209,46 +209,46 @@
 
 
     // Pie Chart
-    var myPieChart = new Chart(pieChart, {
-        type: "pie",
-        data: {
-            datasets: [
-            {
-                data: [50, 35, 15],
-                backgroundColor: ["#1d7af3", "#f3545d", "#fdaf4b"],
-                borderWidth: 0,
-            },
-            ],
-            labels: ["New Visitors", "Subscribers", "Active Users"],
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            legend: {
-                position: "bottom",
-                labels: {
-                    fontColor: "rgb(154, 154, 154)",
-                    fontSize: 11,
-                    usePointStyle: true,
-                    padding: 20,
-                },
-            },
-            pieceLabel: {
-                render: "percentage",
-                fontColor: "white",
-                fontSize: 14,
-            },
-            tooltips: false,
-            layout: {
-                padding: {
-                    left: 20,
-                    right: 20,
-                    top: 20,
-                    bottom: 20,
-                },
-            },
-        },
-    });
+    // var myPieChart = new Chart(pieChart, {
+    //     type: "pie",
+    //     data: {
+    //         datasets: [
+    //         {
+    //             data: [50, 35, 15],
+    //             backgroundColor: ["#1d7af3", "#f3545d", "#fdaf4b"],
+    //             borderWidth: 0,
+    //         },
+    //         ],
+    //         labels: ["New Visitors", "Subscribers", "Active Users"],
+    //     },
+    //     options: {
+    //         responsive: true,
+    //         maintainAspectRatio: false,
+    //         legend: {
+    //             position: "bottom",
+    //             labels: {
+    //                 fontColor: "rgb(154, 154, 154)",
+    //                 fontSize: 11,
+    //                 usePointStyle: true,
+    //                 padding: 20,
+    //             },
+    //         },
+    //         pieceLabel: {
+    //             render: "percentage",
+    //             fontColor: "white",
+    //             fontSize: 14,
+    //         },
+    //         tooltips: false,
+    //         layout: {
+    //             padding: {
+    //                 left: 20,
+    //                 right: 20,
+    //                 top: 20,
+    //                 bottom: 20,
+    //             },
+    //         },
+    //     },
+    // });
 
 
     // Doughnut Chart
@@ -522,7 +522,6 @@
     gradientFill3.addColorStop(0, "rgba(253, 175, 75, 0.7)");
     gradientFill3.addColorStop(1, "rgba(255, 196, 120, 0.3)");
 
-
     // HTML Legends Chart
     var myHtmlLegendsChart = new Chart(htmlLegendsChart, {
         type: "line",
@@ -630,13 +629,72 @@
 
     var myLegendContainer = document.getElementById("myChartLegend");
 
-    // generate HTML legend
+    // Generate HTML legend
     myLegendContainer.innerHTML = myHtmlLegendsChart.generateLegend();
-    
-    // bind onClick event to all LI-tags of the legend
+
+    // Bind onClick event to all LI-tags of the legend
     var legendItems = myLegendContainer.getElementsByTagName("li");
-    for (var i = 0; i < legendItems.length; i++) {
+    for (var i = 0; i < legendItems.length; i += 1) {
         legendItems[i].addEventListener("click", legendClickCallback, false);
     }
+
+    
+    // Load Chart Data Function
+    function loadChartData() {
+        // pieChart
+        fetch("/chart/")
+        .then((response) => response.json())
+        .then((data) => {
+            var severityLevels = Object.keys(data);
+            var counts = Object.values(data);
+            var pieChart = document.getElementById("pieChart").getContext("2d");
+
+            console.log("call");
+
+            new Chart (pieChart, {
+                type: "pie",
+                data: {
+                    datasets: [
+                        {
+                            data: counts,
+                            backgroundColor: ["#1d7af3", "#f3545d", "#fdaf4b"],
+                            borderWidth: 0,
+                        },
+                    ],
+                    labels: severityLevels,
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    legend: {
+                        position: "bottom",
+                        labels: {
+                            fontColor: "rgb(154, 154, 154)",
+                            fontSize: 11,
+                            usePointStyle: true,
+                            padding: 20,
+                        },
+                    },
+                    pieceLabel: {
+                        render: "percentage",
+                        fontColor: "white",
+                        fontSize: 14,
+                    },
+                    tooltips: false,
+                    layout: {
+                        padding: {
+                            left: 20,
+                            right: 20,
+                            top: 20,
+                            bottom: 20,
+                        },
+                    },
+                },
+            });
+        })
+        .catch((error) => console.error("Error:", error));
+    }
+
+    loadChartData();
 </script>
 {% endblock %}
