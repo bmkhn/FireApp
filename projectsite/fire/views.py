@@ -49,6 +49,31 @@ class LocationsDeleteView(DeleteView):
     success_url = reverse_lazy('locations_list')
 
 
+# Incident Views
+class IncidentListView(ListView):
+    model = Incident
+    template_name = "incidents/list.html"
+    context_object_name = "incidents"
+    paginate_by = 5
+
+class IncidentCreateView(CreateView):
+    model = Incident
+    form_class = IncidentForm
+    template_name = "incidents/create.html"
+    success_url = reverse_lazy('incidents_list')
+
+class IncidentUpdateView(UpdateView):
+    model = Incident
+    form_class = IncidentForm
+    template_name = "incidents/update.html"
+    success_url = reverse_lazy('incidents_list')
+
+class IncidentDeleteView(DeleteView):
+    model = Incident
+    template_name = "incidents/delete.html"
+    success_url = reverse_lazy('incidents_list')
+
+
 # Chart Class and Functions
 class ChartView(ListView):
     template_name = "chart.html"
