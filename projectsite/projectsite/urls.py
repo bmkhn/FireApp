@@ -36,4 +36,10 @@ urlpatterns = [
     path('firestations/create', views.FireStationCreateView.as_view(), name='firestations_create'),
     path('firestations/update/<pk>/', views.FireStationUpdateView.as_view(), name='firestations_update'),
     path('firestations/delete/<pk>/', views.FireStationDeleteView.as_view(), name='firestations_delete'),
+
+    # Firefighters URLs
+    path('firefighters/', views.FirefighterListView.as_view(), name='firefighters_list'),
+    path('firefighters/create', views.FirefighterCreateView.as_view(), name='firefighters_create'),
+    path('firefighters/update/<pk>/', views.FirefighterUpdateView.as_view(), name='firefighters_update'),
+    path('firefighters/delete/<pk>/', views.FirefighterDeleteView.as_view(), name='firefighters_delete'),
 ]
