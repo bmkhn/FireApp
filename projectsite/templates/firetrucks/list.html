@@ -48,7 +48,7 @@
                                     <td>{{ firetrucks.truck_number }}</td>
                                     <td>{{ firetrucks.model }}</td>
                                     <td>{{ firetrucks.capacity }}</td>
-                                    <td>{{ firetrucks.station.name }}</td>
+                                    <td>{{ firetrucks.station }}</td>
                                     <td>
                                         <a href="{% url 'firetrucks_update' firetrucks.id %}">Edit</a>
                                         <a href="{% url 'firetrucks_delete' firetrucks.id %}" class="text-danger">Delete</a>
