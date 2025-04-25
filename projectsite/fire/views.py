@@ -1,21 +1,55 @@
 from django.shortcuts import render
 from django.views.generic.list import ListView
-from fire.models import Locations, Incident, FireStation
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from fire.models import Locations, Incident, FireStation, Firefighters, FireTruck, WeatherConditions
+from fire.forms import LocationsForm, IncidentForm, FireStationForm, FirefightersForm, FireTruckForm, WeatherConditionsForm
+from django.urls import reverse_lazy
 
 from django.db import connection
 from django.http import JsonResponse
 from django.db.models.functions import ExtractMonth
 
+from django.db.models import Q
 from django.db.models import Count
 from datetime import datetime
 
 
 class HomePageView(ListView):
-    model = Locations
-    context_object_name = 'home'
     template_name = "home.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
+    def get_queryset(self, *args, **kwargs):
+        pass
+
+# Locations Views
+class LocationListView(ListView):
+    model = Locations
+    template_name = "locations/list.html"
+    context_object_name = "locations"
+    paginate_by = 5
+
+class LocationsCreateView(CreateView):
+    model = Locations
+    form_class = LocationsForm
+    template_name = "locations/create.html"
+    success_url = reverse_lazy('locations_list')
+
+class LocationsUpdateView(UpdateView):
+    model = Locations
+    form_class = LocationsForm
+    template_name = "locations/update.html"
+    success_url = reverse_lazy('locations_list')
+
+class LocationsDeleteView(DeleteView):
+    model = Locations
+    template_name = "locations/delete.html"
+    success_url = reverse_lazy('locations_list')
+
+
+# Chart Class and Functions
 class ChartView(ListView):
     template_name = "chart.html"
 
