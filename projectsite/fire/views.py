@@ -149,6 +149,31 @@ class FireTruckDeleteView(DeleteView):
     success_url = reverse_lazy('firetrucks_list')
 
 
+# Weather Conditions Views
+class WeatherConditionsListView(ListView):
+    model = WeatherConditions
+    template_name = "weatherconditions/list.html"
+    context_object_name = "weatherconditions"
+    paginate_by = 5
+
+class WeatherConditionsCreateView(CreateView):
+    model = WeatherConditions
+    form_class = WeatherConditionsForm
+    template_name = "weatherconditions/create.html"
+    success_url = reverse_lazy('weatherconditions_list')
+
+class WeatherConditionsUpdateView(UpdateView):
+    model = WeatherConditions
+    form_class = WeatherConditionsForm
+    template_name = "weatherconditions/update.html"
+    success_url = reverse_lazy('weatherconditions_list')
+
+class WeatherConditionsDeleteView(DeleteView):
+    model = WeatherConditions
+    template_name = "weatherconditions/delete.html"
+    success_url = reverse_lazy('weatherconditions_list')
+
+
 # Chart Class and Functions
 class ChartView(ListView):
     template_name = "chart.html"

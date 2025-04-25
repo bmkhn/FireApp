@@ -48,4 +48,10 @@ urlpatterns = [
     path('firetrucks/create', views.FireTruckCreateView.as_view(), name='firetrucks_create'),
     path('firetrucks/update/<pk>/', views.FireTruckUpdateView.as_view(), name='firetrucks_update'),
     path('firetrucks/delete/<pk>/', views.FireTruckDeleteView.as_view(), name='firetrucks_delete'),
+
+    # Weather Conditions URLs
+    path('weatherconditions/', views.WeatherConditionsListView.as_view(), name='weatherconditions_list'),
+    path('weatherconditions/create', views.WeatherConditionsCreateView.as_view(), name='weatherconditions_create'),
+    path('weatherconditions/update/<pk>/', views.WeatherConditionsUpdateView.as_view(), name='weatherconditions_update'),
+    path('weatherconditions/delete/<pk>/', views.WeatherConditionsDeleteView.as_view(), name='weatherconditions_delete'),
 ]
