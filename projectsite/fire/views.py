@@ -124,6 +124,31 @@ class FirefighterDeleteView(DeleteView):
     success_url = reverse_lazy('firefighters_list')
 
 
+# Fire Truck
+class FireTruckListView(ListView):
+    model = FireTruck
+    template_name = "firetrucks/list.html"
+    context_object_name = "firetrucks"
+    paginate_by = 5
+
+class FireTruckCreateView(CreateView):
+    model = FireTruck
+    form_class = FireTruckForm
+    template_name = "firetrucks/create.html"
+    success_url = reverse_lazy('firetrucks_list')
+
+class FireTruckUpdateView(UpdateView):
+    model = FireTruck
+    form_class = FireTruckForm
+    template_name = "firetrucks/update.html"
+    success_url = reverse_lazy('firetrucks_list')
+
+class FireTruckDeleteView(DeleteView):
+    model = FireTruck
+    template_name = "firetrucks/delete.html"
+    success_url = reverse_lazy('firetrucks_list')
+
+
 # Chart Class and Functions
 class ChartView(ListView):
     template_name = "chart.html"

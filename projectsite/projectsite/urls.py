@@ -42,4 +42,10 @@ urlpatterns = [
     path('firefighters/create', views.FirefighterCreateView.as_view(), name='firefighters_create'),
     path('firefighters/update/<pk>/', views.FirefighterUpdateView.as_view(), name='firefighters_update'),
     path('firefighters/delete/<pk>/', views.FirefighterDeleteView.as_view(), name='firefighters_delete'),
+
+    # Fire Truck URLs
+    path('firetrucks/', views.FireTruckListView.as_view(), name='firetrucks_list'),
+    path('firetrucks/create', views.FireTruckCreateView.as_view(), name='firetrucks_create'),
+    path('firetrucks/update/<pk>/', views.FireTruckUpdateView.as_view(), name='firetrucks_update'),
+    path('firetrucks/delete/<pk>/', views.FireTruckDeleteView.as_view(), name='firetrucks_delete'),
 ]
