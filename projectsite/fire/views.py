@@ -298,7 +298,7 @@ def MultilineIncidentTop3Country(request):
 
 
 # Multiple Bar Chart by Severity Level
-def multipleBarbySeverity(request):
+def MultipleBarbySeverity(request):
     query = '''
     SELECT
         fi.severity_level,
