@@ -6,7 +6,8 @@ from fire import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', HomePageView.as_view(), name='home'),
+    # path('', HomePageView.as_view(), name='home'),
+    path('', ChartView.as_view(), name='dashboard-chart'),
 
     # Chart URLs
     path('dashboard_chart', ChartView.as_view(), name='dashboard-chart'),
