@@ -25,6 +25,16 @@
 
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href="{% static 'css/demo.css' %}" />
+    <style>
+      .toast {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          min-width: 250px;
+          max-width: 350px;
+          font-size: 14px;
+      }
+  </style>
   </head>
   <body>
     <div class="wrapper">
@@ -267,7 +277,57 @@
     <script src="{% static 'js/atlantis.min.js' %}"></script>
 
     {% block chart %}
-
+    <div id="toast-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 1050;"></div>
     {% endblock %}
-  </body>
+</body>
+
+<script>
+    function showToast(message, type = "success") {
+        const toastContainer = document.getElementById("toast-container");
+
+        // Create the toast element
+        const toast = document.createElement("div");
+        toast.className = `toast toast-${type}`;
+        toast.style.cssText = `
+            background-color: ${type === "success" ? "#28a745" : "#dc3545"};
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            animation: fadeInOut 4s ease forwards;
+        `;
+        toast.innerText = message;
+
+        // Append the toast to the container
+        toastContainer.appendChild(toast);
+
+        // Remove the toast after 4 seconds
+        setTimeout(() => {
+            toast.remove();
+        }, 4000);
+    }
+
+    // Optional: Add fade-in and fade-out animation
+    const style = document.createElement("style");
+    style.innerHTML = `
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateY(20px); }
+            10% { opacity: 1; transform: translateY(0); }
+            90% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(20px); }
+        }
+    `;
+    document.head.appendChild(style);
+</script>
+
+<script>
+    // Display Django messages as toasts
+    {% if messages %}
+        {% for message in messages %}
+            showToast("{{ message }}", "{% if message.tags %}{{ message.tags }}{% else %}success{% endif %}");
+        {% endfor %}
+    {% endif %}
+</script>
+  
 </html>
